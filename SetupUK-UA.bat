@@ -178,7 +178,7 @@ cls
 start %~dp0OfficeSetupFiles\OfficeExtracter.exe /extract:%~dp0OfficeSetupFiles\ /passive /norestart /quiet
 echo Будьласка зачекайте 5 секунд...
 timeout 5 && del /f %~dp0OfficeSetupFiles\configuration-Office365-x64.xml && cls && echo Завантаження %OfficeVer% %OCE%-Біти...
-start %~dp0OfficeSetupFiles\setup.exe /configure Config.xml
+start %~dp0OfficeSetupFiles\setup.exe /configure %~dp0OfficeSetupFiles\Config.xml
 timeout 10 && exit
 
 :exit
