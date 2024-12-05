@@ -6,5 +6,5 @@ This installer contains Access, Excel, OneNote, Outlook, PowerPoint, Publisher, 
 There's no need to download anything manually, the installer will handle everything for you.
 
 ## How to Install
-1. Download SetupEN-US.bat or SetupUK-UA.bat file from the [Releases section](https://github.com/MaximeriX/SimpleOfficeInstaller/releases/tag/Release1.0.3).
-3. Execute either SetupEN-US.bat or SetupUK-UA.bat file.
+1. Download SetupEN-US.bat, SetupRU-RU.bat or SetupUK-UA.bat file from the [Releases section](https://github.com/MaximeriX/SimpleOfficeInstaller/releases/tag/Release1.0.3).
+2. Execute either SetupEN-US.bat, SetupRU-RU.bat or SetupUK-UA.bat file.
