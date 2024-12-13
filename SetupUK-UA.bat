@@ -1,58 +1,83 @@
 @chcp 65001
 @echo off
 @setlocal EnableDelayedExpansion
-title ПОТРІБНІ ПРИВІЛЕЇ АДМІНІСТРАТОРА
+title ПОТРІБНІ ПРАВА АДМІНІСТРАТОРА
 
-@rem Перевірка привілеїв адміністратора
+@rem Перевірка прав адміністратора
 net session
 cls
-echo.
-echo    ╠══════════════════════════════════╣
-echo      ПОТРІБНІ ПРИВІЛЕЇ АДМІНІСТРАТОРА  
-echo    ╠══════════════════════════════════╣
-echo.
+echo ^|
+echo ^|   ╠══╦═══════════════════════════════╦══╣
+echo ^|      ║ ПОТРІБНІ ПРАВА АДМІНІСТРАТОРА ║ 
+echo ^|   ╠══╩═══════════════════════════════╩══╣
+echo ^|
 if %errorlevel% neq 0 goto runadmin
 goto adminstart
 
-@rem Запуск cmd як адміністратор
+@rem Запустити командний рядок від імені адміністратора
 :runadmin
 CD /d %~dp0
 MSHTA "javascript: var shell = new ActiveXObject('shell.application'); shell.ShellExecute('%~nx0', '', '', 'runas', 1);close();"
-timeout 3 && exit
+echo ^| Вихід... && timeout 2 >nul && exit
 
-@rem Початок скрипта
+@rem Початок скрипту
 :adminstart
 :start
 rmdir /s /q "%TEMP%\OfficeSetupFiles\"
 mkdir %TEMP%\OfficeSetupFiles
-title Simple Office Installer by MaximeriX
+title Simple Office Installer від MaximeriX
 cls
-echo Office - має в собі Access, Excel, OneNote, Outlook, PowerPoint, Publisher, Word. (Можна змінити)
-echo ╔═╦═══════╗
-echo ║1║ Добре ║
-echo ║2║ Вийти ║
-echo ╚═╩═════╦═╝
-choice /C:12 /M "Введіть ╚→ :" /N
-set ChoiceOk=%errorlevel%
-if %ChoiceOk% == 1 goto ExcludeApps
-if %ChoiceOk% == 2 exit
+echo ^|
+echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Simple Office Installer від                                            ║
+echo ^|      ╠════════════════════════════════════════════════════════════════════════╣
+echo ^|      ║                                                                        ║
+echo ^|      ║  ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗███████╗██████╗ ██╗██╗  ██╗  ║
+echo ^|      ║  ████╗ ████║██╔══██╗╚██╗██╔╝██║████╗ ████║██╔════╝██╔══██╗██║╚██╗██╔╝  ║
+echo ^|      ║  ██╔████╔██║███████║ ╚███╔╝ ██║██╔████╔██║█████╗  ██████╔╝██║ ╚███╔╝   ║
+echo ^|      ║  ██║╚██╔╝██║██╔══██║ ██╔██╗ ██║██║╚██╔╝██║██╔══╝  ██╔══██╗██║ ██╔██╗   ║
+echo ^|      ║  ██║ ╚═╝ ██║██║  ██║██╔╝╚██╗██║██║ ╚═╝ ██║███████╗██║  ██║██║██╔╝╚██╗  ║
+echo ^|      ║  ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝  ║
+echo ^|      ║                                                                        ║
+echo ^|   ╠══╩════════════════════════════════════════════════════════════════════════╩══╣
+echo ^|      
+timeout 2 >nul
 
-@rem Вибір додатків для виключення
+goto Office
+:Office
+cls
+echo ^|
+echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Office - включає Access, Excel, OneNote, Outlook, PowerPoint, Publisher, Word. (Можна змінити) ║
+echo ^|      ╠═══╦═══════╗                                                                                    ║
+echo ^|      ║ 1 ║ Добре ║                                                                                    ║
+echo ^|      ║ 2 ║ Вийти ║                                                                                    ║
+echo ^|   ╠══╩═══╩═══════╩══╦═════════════════════════════════════════════════════════════════════════════════╩══╣
+echo ^|                     ║
+choice /C:12 /M "|   Введіть ваш вибір ╚→ :" /N
+set UserChoice=%errorlevel%
+if %UserChoice% == 1 timeout 1 >nul && goto ExcludeApps
+if %UserChoice% == 2 echo ^| && echo ^| Вихід... && echo ^| && timeout 1 >nul && exit
+
+@rem Вибір програм для виключення
 :ExcludeApps
 cls
-echo Виберіть додатки, які не хочете завантажувати.
-echo ╔═╦══════════════╗
-echo ║1║ Access       ║
-echo ║2║ Excel        ║
-echo ║3║ OneNote      ║
-echo ║4║ Outlook      ║
-echo ║5║ PowerPoint   ║
-echo ║6║ Publisher    ║
-echo ║7║ Word         ║
-echo ║8║ Залишити все ║
-echo ╚═╩══════════════╩═╗
-set "exclude="
-set /p input="Введіть (1 3 6 тд) ╚→ : "
+echo ^|
+echo ^|   ╠══╦════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Виберіть програми, які ви не хочете завантажувати. ║
+echo ^|      ╠═══╦══════════════╗                                 ║
+echo ^|      ║ 1 ║ Access       ║                                 ║
+echo ^|      ║ 2 ║ Excel        ║                                 ║
+echo ^|      ║ 3 ║ OneNote      ║                                 ║
+echo ^|      ║ 4 ║ Outlook      ║                                 ║
+echo ^|      ║ 5 ║ PowerPoint   ║                                 ║
+echo ^|      ║ 6 ║ Publisher    ║                                 ║
+echo ^|      ║ 7 ║ Word         ║                                 ║
+echo ^|      ║ 8 ║ Залишити всі ║                                 ║
+echo ^|   ╠══╩═══╩══════════════╩══════╦══════════════════════════╩══╣
+echo ^|                                ║   
+set "excludeApps="
+set /p input="|   Введіть ваш вибір (1 4 тощо) ╚→ : "
 
 for %%i in (%input%) do (
     if %%i==1 (
@@ -70,77 +95,91 @@ for %%i in (%input%) do (
     ) else if %%i==7 (
         set Word=Word
     ) else if %%i==8 (
-        goto bitselect
+        goto bitcheck
     ) else (
-        echo Недійсний вибір: %%i
-        timeout 2 && exit
+        echo ^| 
+        echo ^| Неправильний вибір: %%i
+        echo ^| Вихід... 
+        echo ^| && timeout 3 >nul && exit
     )
 )
-goto bitselect
-@rem Перевірка типу системи
-:bitselect
+goto bitcheck
+
+@rem Перевірка архітектури системи
+:bitcheck
 cls
-echo Перевірка типу системи...
+echo ^|
+echo ^|   ╠══╦═══════════════════════════╦══╣
+echo ^|      ║ Перевірка типу системи... ║
+echo ^|   ╠══╩═══════════════════════════╩══╣
+echo ^|
 for /f "tokens=2 delims==" %%i in ('wmic os get osarchitecture /value') do (
-    set type=%%i
+ set architecture=%%i
 )
-if "%type%"=="32-bit" (
-    set OCE=32
+if "%architecture%"=="32-bit" (
+    set OfficeEdition=32
 ) else (
-    set OCE=64
+    set OfficeEdition=64
 )
-goto office
+echo ^| ОС %OfficeEdition%-Бітна
+timeout 2 >nul && goto OfficeSelect
 
 @rem Вибір версії Office
-:office
+:OfficeSelect
 cls
-echo Виберіть версію Office, яку хочете встановити
-echo ╔═╦══════════════════╗
-echo ║1║ Office LTSC 2024 ║
-echo ║2║ Office LTSC 2021 ║
-echo ║3║ Office 2019      ║
-echo ╚═╩═════╦════════════╝
-choice /C:123 /M "Введіть ╚→ :" /N
-set ChoiceOffice=%errorlevel%
-if %ChoiceOffice% == 1 goto LTSC2024
-if %ChoiceOffice% == 2 goto LTSC2021
-if %ChoiceOffice% == 3 goto Office2019
+echo ^|
+echo ^|   ╠══╦══════════════════════════════════════════════════╦══╣
+echo ^|      ║ Виберіть версію Office, яку ви хочете встановити ║
+echo ^|      ╠═══╦══════════════════╗                           ║
+echo ^|      ║ 1 ║ Office LTSC 2024 ║                           ║
+echo ^|      ║ 2 ║ Office LTSC 2021 ║                           ║
+echo ^|      ║ 3 ║ Office 2019      ║                           ║
+echo ^|   ╠══╩═══╩══════════╦═══════╩═══════════════════════════╩══╣
+echo ^|                     ║
+choice /C:123 /M "|   Введіть ваш вибір ╚→ :" /N
+set OfficeChoice=%errorlevel%
+if %OfficeChoice% == 1 timeout 1 >nul && goto LTSC2024
+if %OfficeChoice% == 2 timeout 1 >nul && goto LTSC2021
+if %OfficeChoice% == 3 timeout 1 >nul && goto Office2019
 
 @rem Налаштування для Office LTSC 2024
 :LTSC2024
-set CID=ef5c8a1f-1356-46fc-984b-634b44e23987
-set Channel=PerpetualVL2024
-set PID=ProPlus2024Volume
-set PIDKEY=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
-set OfficeVer=Office LTSC 2024
+set ConfigurationID=ef5c8a1f-1356-46fc-984b-634b44e23987
+set UpdateChannel=PerpetualVL2024 set ProductID=ProPlus2024Volume
+set ProductKey=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
+set OfficeVersion=Office LTSC 2024
 goto ConfigGen
 
 @rem Налаштування для Office LTSC 2021
 :LTSC2021
-set CID=c04f0bb9-2868-4356-8632-88c4c1a4870c
-set Channel=PerpetualVL2021
-set PID=ProPlus2021Volume
-set PIDKEY=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-set OfficeVer=Office LTSC 2021
+set ConfigurationID=c04f0bb9-2868-4356-8632-88c4c1a4870c
+set UpdateChannel=PerpetualVL2021
+set ProductID=ProPlus2021Volume
+set ProductKey=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+set OfficeVersion=Office LTSC 2021
 goto ConfigGen
 
 @rem Налаштування для Office 2019
 :Office2019
-set CID=906df582-99a6-4c42-95e0-a13f220cd505
-set Channel=PerpetualVL2019
-set PID=ProPlus2019Volume
-set PIDKEY=NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
-set OfficeVer=Office 2019
+set ConfigurationID=906df582-99a6-4c42-95e0-a13f220cd505
+set UpdateChannel=PerpetualVL2019
+set ProductID=ProPlus2019Volume
+set ProductKey=NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
+set OfficeVersion=Office 2019
 goto ConfigGen
 
-@rem Генерація XML файлу конфігурації
+@rem Генерація XML конфігураційного файлу
 :ConfigGen
 cls
-echo Генерація XML файлу конфігурації...
+echo ^|
+echo ^|   ╠══╦═════════════════════════════════════════╦══╣
+echo ^|      ║ Генерація XML конфігураційного файлу... ║
+echo ^|   ╠══╩═════════════════════════════════════════╩══╣
+echo ^|
 (
-    echo ^<Configuration ID="%CID%"^>
-    echo   ^<Add OfficeClientEdition="%OCE%" Channel="%Channel%"^>
-    echo     ^<Product ID="%PID%" PIDKEY="%PIDKEY%"^>
+    echo ^<Configuration ID="%ConfigurationID%"^>
+    echo   ^<Add OfficeClientEdition="%OfficeEdition%" Channel="%UpdateChannel%"^>
+    echo     ^<Product ID="%ProductID%" PIDKEY="%ProductKey%"^>
     echo       ^<Language ID="uk-ua" /^>
     echo       ^<Language ID="en-us" /^>
     echo       ^<ExcludeApp ID="%Access%"/^>
@@ -169,34 +208,65 @@ echo Генерація XML файлу конфігурації...
     echo   ^<Display Level="Full" AcceptEULA="TRUE" /^>
     echo ^</Configuration^>
 ) > %TEMP%\OfficeSetupFiles\Config.xml
-goto OfficeSetup
+echo ^| Конфігурація збережена до ^> %TEMP%\OfficeSetupFiles\Config.xml
+timeout 1 >nul
+goto OfficeExtracterDownload
 
 @rem Завантаження Office
-:OfficeSetup
+:OfficeExtracterDownload
+set PATH=%TEMP%\OfficeSetupFiles\
+set ExtractorPath=%TEMP%\OfficeSetupFiles\OfficeExtracter.exe
+set SetupPath=%TEMP%\OfficeSetupFiles\setup.exe
 setlocal
-set URL=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_18129-20030.exe
-set DEST=%TEMP%\OfficeSetupFiles\
-set FILE=OfficeExtracter.exe
 @rem Завантаження файлу за допомогою curl
-echo Завантаження файлу %FILE%...
-curl -L -o %DEST%%FILE% %URL%
-@rem Перевірка, чи файл успішно завантажено
-if exist %DEST%%FILE% (
-    echo Файл успішно завантажено в %DEST%%FILE%
+cls
+echo ^|
+echo ^|   ╠══╦═════════════════════════════════════╦══╣
+echo ^|      ║ Завантаження OfficeExtracter.exe... ║
+echo ^|   ╠══╩═════════════════════════════════════╩══╣
+echo ^|
+curl -L -s -o %ExtractorPath% https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_18129-20030.exe
+@rem Перевірка, чи файл було завантажено успішно
+if exist %ExtractorPath% (
+    echo ^| Успішно завантажено до %PATH%
+    timeout 1 >nul
 ) else (
-    echo Помилка завантаження файлу.
-    pause
+    echo Помилка завантаження OfficeExtracter.exe
+    timeout 10 >nul && exit
 )
 endlocal
+goto Extracting
+
+:Extracting
 cls
-start %TEMP%\OfficeSetupFiles\OfficeExtracter.exe /extract:%TEMP%\OfficeSetupFiles\ /passive /norestart /quiet
-echo Будьласка зачекайте...
-timeout 2 && cls
-del /f %TEMP%\OfficeSetupFiles\OfficeExtracter.exe && cls
-echo Будьласка зачекайте...
-timeout 2 && cls
-del /f %TEMP%\OfficeSetupFiles\configuration-Office365-x64.xml
-echo Інсталятор %OfficeVer% %OCE%-Біти запущено...
-start %TEMP%\OfficeSetupFiles\setup.exe /configure %TEMP%\OfficeSetupFiles\Config.xml
+echo ^|
+echo ^|   ╠══╦═══════════════════════════════╦══╣
+echo ^|      ║ Розпакування файлів Office... ║
+echo ^|   ╠══╩═══════════════════════════════╩══╣
+echo ^|
+start %ExtractorPath% /extract:%PATH% /passive /norestart /quiet
+timeout 2 >nul && del /f %TEMP%\OfficeSetupFiles\OfficeExtracter.exe
+timeout 2 >nul && del /f %TEMP%\OfficeSetupFiles\configuration-Office365-x64.xml
+goto OfficeInstallerStart
+
+:OfficeInstallerStart
+cls
+echo ^|
+echo ^|   ╠══╦══════════════════════════════╦══╣
+echo ^|      ║ Запуск інсталятора Office... ║
+echo ^|   ╠══╩══════════════════════════════╩══╣
+echo ^|
+echo ^| Інсталятор для %OfficeVersion% %OfficeEdition%-Біт запущено..
+start %SetupPath% /configure %PATH%Config.xml
+timeout 2 >nul
+echo ^|
+echo ^| Дякуємо за використання мого скрипту. Будь ласка, підтримайте мене на Ko-fi: https://ko-fi.com/MaximeriX
+echo ^| Натисніть 1, щоб відкрити посилання
+echo ^| Натисніть 2, щоб вийти
+choice /C:12 /M "| >" /N
+set Donation=%errorlevel%
+if %Donation% == 1 start https://ko-fi.com/MaximeriX (
+) else ( 
+echo ^| Вихід... && timeout 2 >nul && exit
+)
 @endlocal
-pause

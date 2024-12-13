@@ -6,19 +6,19 @@ title ADMINISTRATOR PRIVILEGES REQUIRED
 @rem Check for administrator privileges
 net session
 cls
-echo.
-echo    ╠═══════════════════════════════════╣
-echo      ADMINISTRATOR PRIVILEGES REQUIRED  
-echo    ╠═══════════════════════════════════╣
-echo.
+echo ^|
+echo ^|   ╠══╦═══════════════════════════════════╦══╣
+echo ^|      ║ ADMINISTRATOR PRIVILEGES REQUIRED ║ 
+echo ^|   ╠══╩═══════════════════════════════════╩══╣
+echo ^|
 if %errorlevel% neq 0 goto runadmin
 goto adminstart
 
-@rem Run cmd as administrator
+@rem Run command prompt as administrator
 :runadmin
 CD /d %~dp0
 MSHTA "javascript: var shell = new ActiveXObject('shell.application'); shell.ShellExecute('%~nx0', '', '', 'runas', 1);close();"
-timeout 3 && exit
+echo ^| Exiting... && timeout 2 >nul && exit
 
 @rem Start of the script
 :adminstart
@@ -27,32 +27,57 @@ rmdir /s /q "%TEMP%\OfficeSetupFiles\"
 mkdir %TEMP%\OfficeSetupFiles
 title Simple Office Installer by MaximeriX
 cls
-echo Office - includes Access, Excel, OneNote, Outlook, PowerPoint, Publisher, Word. (Can be changed)
-echo ╔═╦═══════╗
-echo ║1║ Okay  ║
-echo ║2║ Exit  ║
-echo ╚═╩═══╦═══╝
-choice /C:12 /M "Enter ╚→ :" /N
-set ChoiceOk=%errorlevel%
-if %ChoiceOk% == 1 goto ExcludeApps
-if %ChoiceOk% == 2 exit
+echo ^|
+echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Simple Office Installer by                                             ║
+echo ^|      ╠════════════════════════════════════════════════════════════════════════╣
+echo ^|      ║                                                                        ║
+echo ^|      ║  ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗███████╗██████╗ ██╗██╗  ██╗  ║
+echo ^|      ║  ████╗ ████║██╔══██╗╚██╗██╔╝██║████╗ ████║██╔════╝██╔══██╗██║╚██╗██╔╝  ║
+echo ^|      ║  ██╔████╔██║███████║ ╚███╔╝ ██║██╔████╔██║█████╗  ██████╔╝██║ ╚███╔╝   ║
+echo ^|      ║  ██║╚██╔╝██║██╔══██║ ██╔██╗ ██║██║╚██╔╝██║██╔══╝  ██╔══██╗██║ ██╔██╗   ║
+echo ^|      ║  ██║ ╚═╝ ██║██║  ██║██╔╝╚██╗██║██║ ╚═╝ ██║███████╗██║  ██║██║██╔╝╚██╗  ║
+echo ^|      ║  ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝  ║
+echo ^|      ║                                                                        ║
+echo ^|   ╠══╩════════════════════════════════════════════════════════════════════════╩══╣
+echo ^|      
+timeout 2 >nul
+
+goto Office
+:Office
+cls
+echo ^|
+echo ^|   ╠══╦══════════════════════════════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Office - includes Access, Excel, OneNote, Outlook, PowerPoint, Publisher, Word. (Can be changed) ║
+echo ^|      ╠═══╦══════╗                                                                                       ║
+echo ^|      ║ 1 ║ Okay ║                                                                                       ║
+echo ^|      ║ 2 ║ Exit ║                                                                                       ║
+echo ^|   ╠══╩═══╩══════╩═══╦═══════════════════════════════════════════════════════════════════════════════════╩══╣
+echo ^|                     ║
+choice /C:12 /M "|   Enter your choice ╚→ :" /N
+set UserChoice=%errorlevel%
+if %UserChoice% == 1 timeout 1 >nul && goto ExcludeApps
+if %UserChoice% == 2 echo ^| && echo ^| Exiting... && echo ^| && timeout 1 >nul && exit
 
 @rem Selection of applications to exclude
 :ExcludeApps
 cls
-echo Select the applications you don't want to download.
-echo ╔═╦══════════════╗
-echo ║1║ Access       ║
-echo ║2║ Excel        ║
-echo ║3║ OneNote      ║
-echo ║4║ Outlook      ║
-echo ║5║ PowerPoint   ║
-echo ║6║ Publisher    ║
-echo ║7║ Word         ║
-echo ║8║ Keep all     ║
-echo ╚═╩══════════════╩╗
-set "exclude="
-set /p input="Enter (1 3 6 etc) ╚→ : "
+echo ^|
+echo ^|   ╠══╦═════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Select the applications you don't want to download. ║
+echo ^|      ╠═══╦════════════╗                                    ║
+echo ^|      ║ 1 ║ Access     ║                                    ║
+echo ^|      ║ 2 ║ Excel      ║                                    ║
+echo ^|      ║ 3 ║ OneNote    ║                                    ║
+echo ^|      ║ 4 ║ Outlook    ║                                    ║
+echo ^|      ║ 5 ║ PowerPoint ║                                    ║
+echo ^|      ║ 6 ║ Publisher  ║                                    ║
+echo ^|      ║ 7 ║ Word       ║                                    ║
+echo ^|      ║ 8 ║ Keep all   ║                                    ║
+echo ^|   ╠══╩═══╩════════════╩════════╦═══════════════════════════╩══╣
+echo ^|                                ║   
+set "excludeApps="
+set /p input="|   Enter your choices (1 4 etc) ╚→ : "
 
 for %%i in (%input%) do (
     if %%i==1 (
@@ -70,76 +95,92 @@ for %%i in (%input%) do (
     ) else if %%i==7 (
         set Word=Word
     ) else if %%i==8 (
-        goto bitselect
+        goto bitcheck
     ) else (
-        echo Invalid choice: %%i
-        timeout 2 && exit
+        echo ^| 
+        echo ^| Invalid choice: %%i
+        echo ^| Exiting... 
+        echo ^| && timeout 3 >nul && exit
     )
 )
-goto bitselect
-@rem Check system type
-:bitselect
+goto bitcheck
+
+@rem Check system architecture
+:bitcheck
 cls
-echo Checking system type...
+echo ^|
+echo ^|   ╠══╦═════════════════════════╦══╣
+echo ^|      ║ Checking system type... ║
+echo ^|   ╠══╩═════════════════════════╩══╣
+echo ^|
 for /f "tokens=2 delims==" %%i in ('wmic os get osarchitecture /value') do (
-    set type=%%i
+ set architecture=%%i
 )
-if "%type%"=="32-bit" (
-    set OCE=32
+if "%architecture%"=="32-bit" (
+    set OfficeEdition=32
 ) else (
-    set OCE=64
+    set OfficeEdition=64
 )
-goto office
+echo ^| OS is %OfficeEdition%-Bit
+timeout 2 >nul && goto OfficeSelect
 
 @rem Select Office version
-:office
+:OfficeSelect
 cls
-echo Select the version of Office you want to install
-echo ╔═╦══════════════════╗
-echo ║1║ Office LTSC 2024 ║
-echo ║2║ Office LTSC 2021 ║
-echo ║3║ Office 2019      ║
-echo ╚═╩═══╦══════════════╝
-choice /C:123 /M "Enter ╚→ :" /N
-set ChoiceOffice=%errorlevel%
-if %ChoiceOffice% == 1 goto LTSC2024
-if %ChoiceOffice% == 2 goto LTSC2021
-if %ChoiceOffice% == 3 goto Office2019
+echo ^|
+echo ^|   ╠══╦══════════════════════════════════════════════════╦══╣
+echo ^|      ║ Select the version of Office you want to install ║
+echo ^|      ╠═══╦══════════════════╗                           ║
+echo ^|      ║ 1 ║ Office LTSC 2024 ║                           ║
+echo ^|      ║ 2 ║ Office LTSC 2021 ║                           ║
+echo ^|      ║ 3 ║ Office 2019      ║                           ║
+echo ^|   ╠══╩═══╩══════════╦═══════╩═══════════════════════════╩══╣
+echo ^|                     ║
+choice /C:123 /M "|   Enter your choice ╚→ :" /N
+set OfficeChoice=%errorlevel%
+if %OfficeChoice% == 1 timeout 1 >nul && goto LTSC2024
+if %OfficeChoice% == 2 timeout 1 >nul && goto LTSC2021
+if %OfficeChoice% == 3 timeout 1 >nul && goto Office2019
 
 @rem Settings for Office LTSC 2024
 :LTSC2024
-set CID=ef5c8a1f-1356-46fc-984b-634b44e23987
-set Channel=PerpetualVL2024
-set PID=ProPlus2024Volume
-set PIDKEY=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
-set OfficeVer=Office LTSC 2024
+set ConfigurationID=ef5c8a1f-1356-46fc-984b-634b44e23987
+set UpdateChannel=PerpetualVL2024
+set ProductID=ProPlus2024Volume
+set ProductKey=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
+set OfficeVersion=Office LTSC 2024
 goto ConfigGen
 
 @rem Settings for Office LTSC 2021
 :LTSC2021
-set CID=c04f0bb9-2868-4356-8632-88c4c1a4870c set Channel=PerpetualVL2021
-set PID=ProPlus2021Volume
-set PIDKEY=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-set OfficeVer=Office LTSC 2021
+set ConfigurationID=c04f0bb9-2868-4356-8632-88c4c1a4870c
+set UpdateChannel=PerpetualVL2021
+set ProductID=ProPlus2021Volume
+set ProductKey=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+set OfficeVersion=Office LTSC 2021
 goto ConfigGen
 
 @rem Settings for Office 2019
 :Office2019
-set CID=906df582-99a6-4c42-95e0-a13f220cd505
-set Channel=PerpetualVL2019
-set PID=ProPlus2019Volume
-set PIDKEY=NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
-set OfficeVer=Office 2019
+set ConfigurationID=906df582-99a6-4c42-95e0-a13f220cd505
+set UpdateChannel=PerpetualVL2019
+set ProductID=ProPlus2019Volume
+set ProductKey=NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
+set OfficeVersion=Office 2019
 goto ConfigGen
 
 @rem Generating XML configuration file
 :ConfigGen
 cls
-echo Generating XML configuration file...
+echo ^|
+echo ^|   ╠══╦══════════════════════════════════════╦══╣
+echo ^|      ║ Generating XML configuration file... ║
+echo ^|   ╠══╩══════════════════════════════════════╩══╣
+echo ^|
 (
-    echo ^<Configuration ID="%CID%"^>
-    echo   ^<Add OfficeClientEdition="%OCE%" Channel="%Channel%"^>
-    echo     ^<Product ID="%PID%" PIDKEY="%PIDKEY%"^>
+    echo ^<Configuration ID="%ConfigurationID%"^>
+    echo   ^<Add OfficeClientEdition="%OfficeEdition%" Channel="%UpdateChannel%"^>
+    echo     ^<Product ID="%ProductID%" PIDKEY="%ProductKey%"^>
     echo       ^<Language ID="en-us" /^>
     echo       ^<ExcludeApp ID="%Access%"/^>
     echo       ^<ExcludeApp ID="%Excel%"/^>
@@ -167,34 +208,65 @@ echo Generating XML configuration file...
     echo   ^<Display Level="Full" AcceptEULA="TRUE" /^>
     echo ^</Configuration^>
 ) > %TEMP%\OfficeSetupFiles\Config.xml
-goto OfficeSetup
+echo ^| Configuration saved to ^> %TEMP%\OfficeSetupFiles\Config.xml
+timeout 1 >nul
+goto OfficeExtracterDownload
 
 @rem Downloading Office
-:OfficeSetup
+:OfficeExtracterDownload
+set PATH=%TEMP%\OfficeSetupFiles\
+set ExtractorPath=%TEMP%\OfficeSetupFiles\OfficeExtracter.exe
+set SetupPath=%TEMP%\OfficeSetupFiles\setup.exe
 setlocal
-set URL=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_18129-20030.exe
-set DEST=%TEMP%\OfficeSetupFiles\
-set FILE=OfficeExtracter.exe
 @rem Downloading the file using curl
-echo Downloading file %FILE%...
-curl -L -o %DEST%%FILE% %URL%
+cls
+echo ^|
+echo ^|   ╠══╦════════════════════════════════════╦══╣
+echo ^|      ║ Downloading OfficeExtracter.exe... ║
+echo ^|   ╠══╩════════════════════════════════════╩══╣
+echo ^|
+curl -L -s -o %ExtractorPath% https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_18129-20030.exe
 @rem Check if the file was downloaded successfully
-if exist %DEST%%FILE% (
-    echo File downloaded successfully to %DEST%%FILE%
+if exist %ExtractorPath% (
+    echo ^| Successfully downloaded to %PATH%
+    timeout 1 >nul
 ) else (
-    echo Error downloading the file.
-    pause
+    echo Error downloading OfficeExtracter.exe
+    timeout 10 >nul && exit
 )
 endlocal
+goto Extracting
+
+:Extracting
 cls
-start %TEMP%\OfficeSetupFiles\OfficeExtracter.exe /extract:%TEMP%\OfficeSetupFiles\ /passive /norestart /quiet
-echo Please wait...
-timeout 2 && cls
-del /f %TEMP%\OfficeSetupFiles\OfficeExtracter.exe && cls
-echo Please wait...
-timeout 2 && cls
-del /f %TEMP%\OfficeSetupFiles\configuration-Office365-x64.xml
-echo Installer for %OfficeVer% %OCE%-Bit has started...
-start %TEMP%\OfficeSetupFiles\setup.exe /configure %TEMP%\OfficeSetupFiles\Config.xml
+echo ^|
+echo ^|   ╠══╦════════════════════════════╦══╣
+echo ^|      ║ Extracting Office Files... ║
+echo ^|   ╠══╩════════════════════════════╩══╣
+echo ^|
+start %ExtractorPath% /extract:%PATH% /passive /norestart /quiet
+timeout 2 >nul && del /f %TEMP%\OfficeSetupFiles\OfficeExtracter.exe
+timeout 2 >nul && del /f %TEMP%\OfficeSetupFiles\configuration-Office365-x64.xml
+goto OfficeInstallerStart
+
+:OfficeInstallerStart
+cls
+echo ^|
+echo ^|   ╠══╦══════════════════════════════╦══╣
+echo ^|      ║ Starting Office installer... ║
+echo ^|   ╠══╩══════════════════════════════╩══╣
+echo ^|
+echo ^| Installer for %OfficeVersion% %OfficeEdition%-Bit has started...
+start %SetupPath% /configure %PATH%Config.xml
+timeout 2 >nul
+echo ^|
+echo ^| Thank you for using my script. Please consider donating to me on Ko-fi: https://ko-fi.com/MaximeriX
+echo ^| Press 1 to open the link
+echo ^| Press 2 to exit
+choice /C:12 /M "| >" /N
+set Donation=%errorlevel%
+if %Donation% == 1 start https://ko-fi.com/MaximeriX (
+) else ( 
+echo ^| Exiting... && timeout 2 >nul && exit
+)
 @endlocal
-pause
