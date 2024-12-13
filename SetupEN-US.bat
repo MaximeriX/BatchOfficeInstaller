@@ -26,6 +26,7 @@ echo ^| Exiting... && timeout 2 >nul && exit
 rmdir /s /q "%TEMP%\OfficeSetupFiles\"
 mkdir %TEMP%\OfficeSetupFiles
 title Simple Office Installer by MaximeriX
+set Debug=0
 cls
 echo ^|
 echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
@@ -47,20 +48,30 @@ goto Office
 :Office
 cls
 echo ^|
-echo ^|   ╠══╦══════════════════════════════════════════════════════════════════════════════════════════════════╦══╣
-echo ^|      ║ Office - includes Access, Excel, OneNote, Outlook, PowerPoint, Publisher, Word. (Can be changed) ║
-echo ^|      ╠═══╦══════╗                                                                                       ║
-echo ^|      ║ 1 ║ Okay ║                                                                                       ║
-echo ^|      ║ 2 ║ Exit ║                                                                                       ║
-echo ^|   ╠══╩═══╩══════╩═══╦═══════════════════════════════════════════════════════════════════════════════════╩══╣
+echo ^|   ╠══╦═════════════════════════════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Office - includes Access, Excel, OneNote, Outlook, PowerPoint, Project, Publisher, Visio, Word. ║
+echo ^|      ╠═══╦══════╗                                                                                      ║
+echo ^|      ║ 1 ║ Okay ║                                                                                      ║
+echo ^|      ║ 2 ║ Exit ║                                                                                      ║
+echo ^|   ╠══╩═══╩══════╩═══╦══════════════════════════════════════════════════════════════════════════════════╩══╣
 echo ^|                     ║
-choice /C:12 /M "|   Enter your choice ╚→ :" /N
+choice /C:123 /M "|   Enter your choice ╚→ :" /N
 set UserChoice=%errorlevel%
 if %UserChoice% == 1 timeout 1 >nul && goto ExcludeApps
 if %UserChoice% == 2 echo ^| && echo ^| Exiting... && echo ^| && timeout 1 >nul && exit
+if %UserChoice% == 3 set Debug=1 && echo ^| V && timeout 2 >nul && goto ExcludeApps
 
 @rem Selection of applications to exclude
 :ExcludeApps
+set Access=1
+set Excel=1
+set OneNote=1
+set Outlook=1
+set PowerPoint=1
+set Project=1
+set Publisher=1
+set Visio=1
+set Word=1
 cls
 echo ^|
 echo ^|   ╠══╦═════════════════════════════════════════════════════╦══╣
@@ -71,9 +82,11 @@ echo ^|      ║ 2 ║ Excel      ║                                    ║
 echo ^|      ║ 3 ║ OneNote    ║                                    ║
 echo ^|      ║ 4 ║ Outlook    ║                                    ║
 echo ^|      ║ 5 ║ PowerPoint ║                                    ║
-echo ^|      ║ 6 ║ Publisher  ║                                    ║
-echo ^|      ║ 7 ║ Word       ║                                    ║
-echo ^|      ║ 8 ║ Keep all   ║                                    ║
+echo ^|      ║ 6 ║ Project    ║                                    ║
+echo ^|      ║ 7 ║ Publisher  ║                                    ║
+echo ^|      ║ 8 ║ Visio      ║                                    ║
+echo ^|      ║ 9 ║ Word       ║                                    ║
+echo ^|      ║ A ║ Keep all   ║                                    ║
 echo ^|   ╠══╩═══╩════════════╩════════╦═══════════════════════════╩══╣
 echo ^|                                ║   
 set "excludeApps="
@@ -81,20 +94,26 @@ set /p input="|   Enter your choices (1 4 etc) ╚→ : "
 
 for %%i in (%input%) do (
     if %%i==1 (
-        set Access=Access
+        set Access=0
     ) else if %%i==2 (
-        set Excel=Excel
+        set Excel=0
     ) else if %%i==3 (
-        set OneNote=OneNote
+        set OneNote=0
     ) else if %%i==4 (
-        set Outlook=Outlook
+        set Outlook=0
     ) else if %%i==5 (
-        set PowerPoint=PowerPoint
+        set PowerPoint=0
     ) else if %%i==6 (
-        set Publisher=Publisher
+        set Project=0
     ) else if %%i==7 (
-        set Word=Word
+        set Publisher=0
     ) else if %%i==8 (
+        set Visio=0
+    ) else if %%i==9 (
+        goto Word=0
+    ) else if %%i==A (
+        goto bitcheck
+    ) else if %%i==a (
         goto bitcheck
     ) else (
         echo ^| 
@@ -127,6 +146,7 @@ timeout 2 >nul && goto OfficeSelect
 @rem Select Office version
 :OfficeSelect
 cls
+set Groove=1
 echo ^|
 echo ^|   ╠══╦══════════════════════════════════════════════════╦══╣
 echo ^|      ║ Select the version of Office you want to install ║
@@ -140,33 +160,84 @@ choice /C:123 /M "|   Enter your choice ╚→ :" /N
 set OfficeChoice=%errorlevel%
 if %OfficeChoice% == 1 timeout 1 >nul && goto LTSC2024
 if %OfficeChoice% == 2 timeout 1 >nul && goto LTSC2021
-if %OfficeChoice% == 3 timeout 1 >nul && goto Office2019
+if %OfficeChoice% == 3 timeout 1 >nul && set Groove=0 && goto Office2019
 
 @rem Settings for Office LTSC 2024
 :LTSC2024
+set ProductIDPR=ProjectPro2024Volume
+set ProductKeyPR=FQQ23-N4YCY-73HQ3-FM9WC-76HF4
+set ProductIDVS=VisioPro2024Volume
+set ProductKeyVS=B7TN8-FJ8V3-7QYCP-HQPMV-YY89G
 set ConfigurationID=ef5c8a1f-1356-46fc-984b-634b44e23987
 set UpdateChannel=PerpetualVL2024
 set ProductID=ProPlus2024Volume
 set ProductKey=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
 set OfficeVersion=Office LTSC 2024
-goto ConfigGen
+if %Debug% == 1 (
+    goto Debug
+) else (
+    goto ConfigGen
+)
 
 @rem Settings for Office LTSC 2021
 :LTSC2021
+set ProductIDPR=ProjectPro2021Volume
+set ProductKeyPR=FTNWT-C6WBT-8HMGF-K9PRX-QV9H8
+set ProductIDVS=VisioPro2021Volume
+set ProductKeyVS=KNH8D-FGHT4-T8RK3-CTDYJ-K2HT4
 set ConfigurationID=c04f0bb9-2868-4356-8632-88c4c1a4870c
 set UpdateChannel=PerpetualVL2021
 set ProductID=ProPlus2021Volume
 set ProductKey=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
 set OfficeVersion=Office LTSC 2021
-goto ConfigGen
+if %Debug% == 1 (
+    goto Debug
+) else (
+    goto ConfigGen
+)
 
 @rem Settings for Office 2019
 :Office2019
+set ProductIDPR=ProjectPro2019Volume
+set ProductKeyPR=B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B
+set ProductIDVS=VisioPro2019Volume
+set ProductKeyVS=9BGNQ-K37YR-RQHF2-38RQ3-7VCBB
 set ConfigurationID=906df582-99a6-4c42-95e0-a13f220cd505
 set UpdateChannel=PerpetualVL2019
 set ProductID=ProPlus2019Volume
 set ProductKey=NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
 set OfficeVersion=Office 2019
+if %Debug% == 1 (
+    goto Debug
+) else (
+    goto ConfigGen
+)
+
+:Debug
+cls
+echo ^| Current variable values:
+echo ^| Access: %Access%
+echo ^| Excel: %Excel%
+echo ^| Groove: %Groove%
+echo ^| OneNote: %OneNote%
+echo ^| Outlook: %Outlook%
+echo ^| PowerPoint: %PowerPoint%
+echo ^| Publisher: %Publisher%
+echo ^| Word: %Word%
+echo ^| Project: %Project%
+echo ^| Visio: %Visio%
+echo ^|
+echo ^| ProductIDPR: %ProductIDPR%
+echo ^| ProductKeyPR: %ProductKeyPR%
+echo ^| ProductIDVS: %ProductIDVS%
+echo ^| ProductKeyVS: %ProductKeyVS%
+echo ^| ConfigurationID: %ConfigurationID%
+echo ^| UpdateChannel: %UpdateChannel%
+echo ^| ProductID: %ProductID%
+echo ^| ProductKey: %ProductKey%
+echo ^| OfficeVersion: %OfficeVersion%
+echo ^|
+pause >nul
 goto ConfigGen
 
 @rem Generating XML configuration file
@@ -182,17 +253,47 @@ echo ^|
     echo   ^<Add OfficeClientEdition="%OfficeEdition%" Channel="%UpdateChannel%"^>
     echo     ^<Product ID="%ProductID%" PIDKEY="%ProductKey%"^>
     echo       ^<Language ID="en-us" /^>
-    echo       ^<ExcludeApp ID="%Access%"/^>
-    echo       ^<ExcludeApp ID="%Excel%"/^>
-    echo       ^<ExcludeApp ID="Groove"/^>
+    if %Access%==0 echo       ^<ExcludeApp ID="Access"/^>
+    if %Excel%==0 echo       ^<ExcludeApp ID="Excel"/^>
+    if %Groove%==0 echo       ^<ExcludeApp ID="Groove"/^>
     echo       ^<ExcludeApp ID="Lync"/^>
     echo       ^<ExcludeApp ID="OneDrive"/^>
-    echo       ^<ExcludeApp ID="%OneNote%"/^>
-    echo       ^<ExcludeApp ID="%Outlook%"/^>
-    echo       ^<ExcludeApp ID="%PowerPoint%"/^>
-    echo       ^<ExcludeApp ID="%Publisher%"/^>
-    echo       ^<ExcludeApp ID="%Word%"/^>
+    if %OneNote%==0 echo       ^<ExcludeApp ID="OneNote"/^>
+    if %Outlook%==0 echo       ^<ExcludeApp ID="Outlook"/^>
+    if %PowerPoint%==0 echo       ^<ExcludeApp ID="PowerPoint"/^>
+    if %Publisher%==0 echo       ^<ExcludeApp ID="Publisher"/^>
+    if %Word%==0 echo       ^<ExcludeApp ID="Word"/^>
     echo     ^</Product^>
+    if %Project%==1 (
+        echo     ^<Product ID="%ProductIDPR%" PIDKEY="%ProductKeyPR%"^>
+        echo       ^<Language ID="en-us" /^>
+        if %Access%==0 echo       ^<ExcludeApp ID="Access"/^>
+        if %Excel%==0 echo       ^<ExcludeApp ID="Excel"/^>
+        if %Groove%==0 echo       ^<ExcludeApp ID="Groove"/^>
+        echo       ^<ExcludeApp ID="Lync"/^>
+        echo       ^<ExcludeApp ID="OneDrive"/^>
+        if %OneNote%==0 echo       ^<ExcludeApp ID="OneNote"/^>
+        if %Outlook%==0 echo       ^<ExcludeApp ID="Outlook"/^>
+        if %PowerPoint%==0 echo       ^<ExcludeApp ID="PowerPoint"/^>
+        if %Publisher%==0 echo       ^<ExcludeApp ID="Publisher"/^>
+        if %Word%==0 echo       ^<ExcludeApp ID="Word"/^>
+        echo     ^</Product^>
+    )
+    if %Visio%==1 (
+        echo     ^<Product ID="%ProductIDVS%" PIDKEY="%ProductKeyVS%"^>
+        echo       ^<Language ID="en-us" /^>
+        if %Access%==0 echo       ^<ExcludeApp ID="Access"/^>
+        if %Excel%==0 echo       ^<ExcludeApp ID="Excel"/^>
+        if %Groove%==0 echo       ^<ExcludeApp ID="Groove"/^>
+        echo       ^<ExcludeApp ID="Lync"/^>
+        echo       ^<ExcludeApp ID="OneDrive"/^>
+        if %OneNote%==0 echo       ^<ExcludeApp ID="OneNote"/^>
+        if %Outlook%==0 echo       ^<ExcludeApp ID="Outlook"/^>
+        if %PowerPoint%==0 echo       ^<ExcludeApp ID="PowerPoint"/^>
+        if %Publisher%==0 echo       ^<ExcludeApp ID="Publisher"/^>
+        if %Word%==0 echo       ^<ExcludeApp ID="Word"/^>
+        echo     ^</Product^>
+    )
     echo   ^</Add^>
     echo   ^<Property Name="SharedComputerLicensing" Value="0" /^>
     echo   ^<Property Name="FORCEAPPSHUTDOWN" Value="FALSE" /^>
