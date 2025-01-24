@@ -22,10 +22,10 @@ echo ^| Выход... && timeout 2 >nul && exit
 cls
 rmdir /s /q "%TEMP%\OfficeSetupFiles\"
 mkdir %TEMP%\OfficeSetupFiles
-title Simple Office Installer от MaximeriX && set DebugMode=0
+title Batch Office Installer от MaximeriX && set DebugMode=0
 echo ^|
 echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
-echo ^|      ║ Simple Office Installer от                                             ║
+echo ^|      ║ Batch Office Installer от                                              ║
 echo ^|      ╠════════════════════════════════════════════════════════════════════════╣
 echo ^|      ║                                                                        ║
 echo ^|      ║  ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗███████╗██████╗ ██╗██╗  ██╗  ║
