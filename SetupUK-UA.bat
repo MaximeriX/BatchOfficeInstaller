@@ -19,13 +19,13 @@ MSHTA "javascript: var shell = new ActiveXObject('shell.application'); shell.She
 echo ^| Exiting... && timeout 2 >nul && exit
 
 :Start
-cls
 rmdir /s /q "%TEMP%\OfficeSetupFiles\"
 mkdir %TEMP%\OfficeSetupFiles
-title Batch Office Installer від MaximeriX && set DebugMode=0
+title Batch Office Installer v1.0.9 від MaximeriX && set DebugMode=0
+cls
 echo ^|
 echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
-echo ^|      ║ Batch Office Installer від                                             ║
+echo ^|      ║ Batch Office Installer v1.0.9 від                                             ║
 echo ^|      ╠════════════════════════════════════════════════════════════════════════╣
 echo ^|      ║                                                                        ║
 echo ^|      ║  ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗███████╗██████╗ ██╗██╗  ██╗  ║
@@ -43,13 +43,13 @@ goto OfficeInfo
 :OfficeInfo
 cls
 echo ^|
-echo ^|   ╠══╦══════════════════════════════════════════════════════════════════════════════════╦══╣
-echo ^|      ║ Office - включає Access, Excel, OneDrive, OneNote, Outlook, PowerPoint, Project, ║
-echo ^|      ║ Publisher, Teams, Visio and Word. (Можна змінити)                                ║
-echo ^|      ╠═══╦═══════╗                                                                      ║
-echo ^|      ║ 1 ║ Добре ║                                                                      ║
-echo ^|      ║ 2 ║ Вийти ║                                                                      ║
-echo ^|   ╠══╩═══╩═══════╩══╦═══════════════════════════════════════════════════════════════════╩══╣
+echo ^|   ╠══╦═════════════════════════════════════════════════════════════════════════╦══╣
+echo ^|      ║ Office включає - Access, Excel, OneDrive, OneNote, Outlook, PowerPoint, ║
+echo ^|      ║ Project, Publisher, Teams, Visio and Word. (Можна змінити)              ║
+echo ^|      ╠═══╦═══════╗                                                             ║
+echo ^|      ║ 1 ║ Добре ║                                                             ║
+echo ^|      ║ 2 ║ Вийти ║                                                             ║
+echo ^|   ╠══╩═══╩═══════╩══╦══════════════════════════════════════════════════════════╩══╣
 echo ^|                     ║
 choice /C:123 /M "|   Введіть ваш вибір ╚→ :" /N
 set OfficeInfo=%errorlevel%
@@ -80,14 +80,13 @@ echo ^|      ║ 1 ║ Office LTSC Pro Plus 2024 ║                ║
 echo ^|      ║ 2 ║ Office LTSC Standart 2024 ║                ║
 echo ^|      ║ 3 ║ Office LTSC Pro Plus 2021 ║                ║
 echo ^|      ║ 4 ║ Office LTSC Standart 2021 ║                ║
-echo ^|      ║ 5 ║ Office Pro Plus 2019      ║                ║
-echo ^|      ║ 6 ║ Office Standart 2019      ║                ║
+echo ^|      ║ 7 ║ Office Pro Plus 2016      ║                   ║
+echo ^|      ║ 8 ║ Office Standart 2016      ║                   ║
 echo ^|   ╠══╩═══╩══════════╦════════════════╩════════════════╩══╣
 echo ^|                     ║
-choice /C:123456 /M "|   Введіть ваш вибір ╚→ :" /N
+choice /C:12345678 /M "|   Введіть ваш вибір ╚→ :" /N
 set SelectVer=%errorlevel%
-if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
-    set UpdateChannel=PerpetualVL2024
+if %SelectVer% == 1 (set UpdateChannel=PerpetualVL2024
     set ProductID=ProPlus2024Volume
     set ProductKey=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
     set OfficeVersion=Office LTSC Pro Plus 2024
@@ -95,8 +94,7 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=B7TN8-FJ8V3-7QYCP-HQPMV-YY89G
     set ProductIDPR=ProjectPro2024Volume
     set ProductKeyPR=FQQ23-N4YCY-73HQ3-FM9WC-76HF4
-) else if %SelectVer% == 2 (set ConfigurationID=cfa6bde8-1495-41e7-82d6-561c50f08d49
-    set UpdateChannel=PerpetualVL2024
+) else if %SelectVer% == 2 (set UpdateChannel=PerpetualVL2024
     set ProductID=Standard2024Volume
     set ProductKey=V28N4-JG22K-W66P8-VTMGK-H6HGR
     set OfficeVersion=Office LTSC Standart 2024
@@ -104,8 +102,7 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=JMMVY-XFNQC-KK4HK-9H7R3-WQQTV
     set ProductIDPR=ProjectStd2024Volume
     set ProductKeyPR=PD3TT-NTHQQ-VC7CY-MFXK3-G87F8
-) else if %SelectVer% == 3 (set ConfigurationID=f67727bb-37d9-4dde-8aeb-c92055cf3978
-    set UpdateChannel=PerpetualVL2021
+) else if %SelectVer% == 3 (set UpdateChannel=PerpetualVL2021
     set ProductID=ProPlus2021Volume
     set ProductKey=FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
     set OfficeVersion=Office LTSC Pro Plus 2021
@@ -113,8 +110,7 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=KNH8D-FGHT4-T8RK3-CTDYJ-K2HT4
     set ProductIDPR=ProjectPro2021Volume
     set ProductKeyPR=FTNWT-C6WBT-8HMGF-K9PRX-QV9H8
-) else if %SelectVer% == 4 (set ConfigurationID=0681ad57-907c-4c72-a4f1-5aa51ef3bcf9
-    set UpdateChannel=PerpetualVL2021
+) else if %SelectVer% == 4 (set UpdateChannel=PerpetualVL2021
     set ProductID=Standard2021Volume
     set ProductKey=KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3
     set OfficeVersion=Office LTSC Standart 2021
@@ -122,8 +118,7 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=MJVNY-BYWPY-CWV6J-2RKRT-4M8QG
     set ProductIDPR=ProjectStd2021Volume
     set ProductKeyPR=J2JDC-NJCYY-9RGQ4-YXWMH-T3D4T
-) else if %SelectVer% == 5 (set ConfigurationID=171dfa11-b7eb-4846-8bf8-774b4dc37656
-    set UpdateChannel=PerpetualVL2019
+) else if %SelectVer% == 5 (set UpdateChannel=PerpetualVL2019
     set ProductID=ProPlus2019Volume
     set ProductKey=XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
     set OfficeVersion=Office Pro Plus 2019
@@ -131,8 +126,7 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=9BGNQ-K37YR-RQHF2-38RQ3-7VCBB
     set ProductIDPR=ProjectPro2019Volume
     set ProductKeyPR=B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B
-) else if %SelectVer% == 6 (set ConfigurationID=db6e9fb5-e391-4484-976c-3744e14ea516
-    set UpdateChannel=PerpetualVL2019
+) else if %SelectVer% == 6 (set UpdateChannel=PerpetualVL2019
     set ProductID=Standard2019Volume
     set ProductKey=6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK
     set OfficeVersion=Office Standart 2019
@@ -140,6 +134,22 @@ if %SelectVer% == 1 (set ConfigurationID=cc242415-492a-452d-bd27-8e114a383d31
     set ProductKeyVS=7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2
     set ProductIDPR=ProjectStd2019Volume
     set ProductKeyPR=C4F7P-NCP8C-6CQPT-MQHV9-JXD2M
+) else if %SelectVer% == 7 (set UpdateChannel=Broad
+    set ProductID=ProPlusRetail
+    set ProductKey=CYC3N-BHX8G-QJVJV-H2WWP-BTDRB
+    set OfficeVersion=Office Pro Plus 2016
+    set ProductIDVS=VisioProXVolume
+    set ProductKeyVS=69WXN-MBYV6-22PQG-3WGHK-RM6XC
+    set ProductIDPR=ProjectProXVolume
+    set ProductKeyPR=WGT24-HCNMF-FQ7XH-6M8K7-DRTW9
+) else if %SelectVer% == 8 (set UpdateChannel=Broad
+    set ProductID=StandardRetail
+    set ProductKey=PCCXN-7MKB3-F986V-V6HV4-CR4MR
+    set OfficeVersion=Office Standart 2016
+    set ProductIDVS=VisioStdXVolume
+    set ProductKeyVS=NY48V-PPYYH-3F4PX-XJRKJ-W4423
+    set ProductIDPR=ProjectStdXVolume
+    set ProductKeyPR=D8NRQ-JTYM3-7J2DX-646CT-6836M
 )
 timeout 2 >nul && goto AppsInstall 
 
@@ -197,7 +207,7 @@ echo ^|      ║ Генерація XML файлу конфігурації... �
 echo ^|   ╠══╩═════════════════════════════════════╩══╣
 echo ^|
 (
-    echo ^<Configuration ID="%ConfigurationID%"^>
+    echo ^<Configuration^>
     echo   ^<Add OfficeClientEdition="%OfficeEdition%" Channel="%UpdateChannel%"^>
     echo     ^<Product ID="%ProductID%" PIDKEY="%ProductKey%"^>
     echo       ^<Language ID="MatchOS" /^>
