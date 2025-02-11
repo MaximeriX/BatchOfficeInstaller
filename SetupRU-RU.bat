@@ -83,8 +83,8 @@ echo ^|      ║ 3 ║ Office LTSC Pro Plus 2021 ║                    ║
 echo ^|      ║ 4 ║ Office LTSC Standart 2021 ║                    ║
 echo ^|      ║ 5 ║ Office Pro Plus 2019      ║                    ║
 echo ^|      ║ 6 ║ Office Standart 2019      ║                    ║
-echo ^|      ║ 7 ║ Office Pro Plus 2016      ║                   ║
-echo ^|      ║ 8 ║ Office Standart 2016      ║                   ║
+echo ^|      ║ 7 ║ Office Pro Plus 2016      ║                    ║
+echo ^|      ║ 8 ║ Office Standart 2016      ║                    ║
 echo ^|   ╠══╩═══╩══════════╦════════════════╩════════════════════╩══╣
 echo ^|                     ║
 choice /C:12345678 /M "|   Введите ваш выбор ╚→ :" /N
