@@ -25,7 +25,7 @@ title Batch Office Installer v1.0.9 від MaximeriX && set DebugMode=0
 cls
 echo ^|
 echo ^|   ╠══╦════════════════════════════════════════════════════════════════════════╦══╣
-echo ^|      ║ Batch Office Installer v1.0.9 від                                             ║
+echo ^|      ║ Batch Office Installer v1.0.9 від                                      ║
 echo ^|      ╠════════════════════════════════════════════════════════════════════════╣
 echo ^|      ║                                                                        ║
 echo ^|      ║  ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗███████╗██████╗ ██╗██╗  ██╗  ║
